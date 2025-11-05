@@ -6,6 +6,12 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -27,6 +33,18 @@ public class PokemonController {
         } else {
             log.warn("Código HTTP: 404 (Not Found) — o recurso solicitado (ID {}) é inexistente.", id);
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        Optional<Pokemon> opt = pokemonService.findById(id);
+        if (opt.isPresent()) {
+            log.info("GET /api/pokemon/{} - 200 OK", id);
+            return ResponseEntity.ok(opt.get());
+        } else {
+            log.warn("GET /api/pokemon/{} - 404 Not Found", id);
+            return ResponseEntity.status(404).body(Map.of("error", "Pokemon não encontrado"));
         }
     }
 }

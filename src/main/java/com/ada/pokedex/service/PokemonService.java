@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+
+
 @AllArgsConstructor
 @Service
 public class PokemonService {
@@ -25,6 +27,10 @@ public class PokemonService {
         } else {
             setter.accept(novoValor);
         }
+    }
+
+    public Optional<Pokemon> findById(Long id) {
+            return pokemonRepository.findById(id);
     }
 
     // AtualizaçãoPokemon
