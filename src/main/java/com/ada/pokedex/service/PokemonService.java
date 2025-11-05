@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
+
 @AllArgsConstructor
 @Service
 public class PokemonService {
@@ -20,6 +22,7 @@ public class PokemonService {
         return pokemonRepository.findAll();
     }
 
-
-
+    public Optional<Pokemon> findById(Long id) {
+            return pokemonRepository.findById(id);
+    }
 }

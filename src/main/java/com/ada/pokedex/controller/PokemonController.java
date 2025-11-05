@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RequestMapping("/api/pokemon")
@@ -25,6 +26,15 @@ public class PokemonController {
         return ResponseEntity.ok(result);
     }
 
-
-
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        Optional<Pokemon> opt = pokemonService.findById(id);
+        if (opt.isPresent()) {
+            log.info("GET /api/pokemon/{} - 200 OK", id);
+            return ResponseEntity.ok(opt.get());
+        } else {
+            log.warn("GET /api/pokemon/{} - 404 Not Found", id);
+            return ResponseEntity.status(404).body(Map.of("error", "Pokemon não encontrado"));
+        }
+    }
 }
