@@ -1,42 +1,37 @@
-package com.ada.pokedex.model;
+package com.ada.pokedex.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
-@Entity
-public class Pokemon {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PokemonDTO {
     private Long id;
 
+    @NotBlank(message = "O nome não pode ser vazio")
     private String name;
+
+    @Min(value = 1, message = "A altura deve ser no mínimo 1")
     private int height;
+
+    @Min(value = 1, message = "O peso deve ser no mínimo 1")
     private int weight;
 
-    @ElementCollection
+    @NotEmpty(message = "O Pokémon deve ter pelo menos uma habilidade")
     private List<String> abilities;
 
-    @ManyToOne
-    @JoinColumn(name = "treinador_id")
-    private Treinador treinador;
+    @NotNull(message = "O ID do treinador é obrigatório")
+    private Long treinadorId;
 
-    @ElementCollection
-    @CollectionTable(name = "pokemon_types")
     private List<String> types;
-
-    @ElementCollection
-    @CollectionTable(name = "pokemon_stats")
-    @MapKeyColumn(name = "stat_name")
-    @Column(name = "base_stat")
-    private Map<String, Integer> stats = new HashMap<>();
-
-    @Column(length = 1000)
+    private Map<String, Integer> stats;
     private String descricao;
-
     private String urlDoChoro;
 
+    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getName() { return name; }
@@ -47,8 +42,8 @@ public class Pokemon {
     public void setWeight(int weight) { this.weight = weight; }
     public List<String> getAbilities() { return abilities; }
     public void setAbilities(List<String> abilities) { this.abilities = abilities; }
-    public Treinador getTreinador() { return treinador; }
-    public void setTreinador(Treinador treinador) { this.treinador = treinador; }
+    public Long getTreinadorId() { return treinadorId; }
+    public void setTreinadorId(Long treinadorId) { this.treinadorId = treinadorId; }
     public List<String> getTypes() { return types; }
     public void setTypes(List<String> types) { this.types = types; }
     public Map<String, Integer> getStats() { return stats; }
