@@ -1,4 +1,4 @@
-# API Pokédex Avançada
+# API Pokédex
 
 Uma API RESTful completa e segura construída com Spring Boot 3 e Java 21, projetada para gerenciar Treinadores, seus Pokémons capturados, e implementar uma lógica avançada de "Modo Jogo" (Visto vs. Capturado).
 
